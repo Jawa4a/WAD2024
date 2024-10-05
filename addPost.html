@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Post</title>
-    <!-- Updated link to the CSS file -->
-    <link rel="stylesheet" href="res/style/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Navigation bar -->
@@ -40,7 +39,13 @@
         <p>&copy; 2024 Your Team Name. All rights reserved.</p>
     </footer>
 
-    <script src="scripts/post.js"></script>
+    <script>
+        // Redirect to index.html after submitting the form
+        document.getElementById('add-post-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            window.location.href = 'index.html'; // Redirect to index.html
+        });
+    </script>
 
 </body>
 </html>
