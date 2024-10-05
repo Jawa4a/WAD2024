@@ -3,49 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Post</title>
     <link rel="stylesheet" href="res/style/style.css">
+    <style>
+        /* Ensures the footer is always at the bottom */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 600px;
+            margin: auto;
+            padding: 1rem;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation bar -->
-    <nav>
-        <ul>
-            <li><a href="index.html" id="home-link">Home</a></li>
-            <li><a href="addPost.html" id="add-post-link">Add Post</a></li>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="addPost.html">Add Post</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Add Post Form -->
-    <div class="container">
+    <main>
         <h1>Add a New Post</h1>
         <form id="add-post-form">
-            <div class="form-group">
-                <label for="post-title">Title:</label>
-                <input type="text" id="post-title" name="post-title" required>
-            </div>
+            <label for="post-body">Post Body:</label>
+            <textarea id="post-body" name="body" placeholder="Write your post here..."></textarea>
 
-            <div class="form-group">
-                <label for="post-content">Content:</label>
-                <textarea id="post-content" name="post-content" rows="10" required></textarea>
-            </div>
+            <label for="post-image">Select File (Optional):</label>
+            <input type="file" id="post-image" name="file">
 
-            <button type="submit" id="submit-post">Add Post</button>
+            <input type="submit" value="Add Post">
         </form>
-    </div>
+    </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2024 Your Team Name. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Redirect to index.html after submitting the form
-        document.getElementById('add-post-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission behavior
-            window.location.href = 'index.html'; // Redirect to index.html
-        });
-    </script>
-
+    <script src="scripts/main.js"></script>
 </body>
 </html>
