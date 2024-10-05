@@ -38,8 +38,12 @@ nav ul li a {
     padding: 5px 10px;
     border-radius: 5px;
 }
+nav ul li a:visited {
+    color: white;
+    text-decoration: none;
+}
 
-/* Hover effect on Home and Add Post */
+/* Hover effect on Home*/
 nav ul li a:hover {
     background-color: #555;
 }
