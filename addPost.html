@@ -20,7 +20,7 @@
     <main>
         <form id="add-post-form">
             <label for="post-body">Post body:</label>
-            <textarea id="post-body" name="body" placeholder="Write your post here..."></textarea>
+            <textarea id="post-body" name="body" placeholder="textarea"></textarea>
 
             <label for="post-image">Select file:</label>
             <input type="file" id="post-image" name="file">
@@ -29,6 +29,14 @@
         </form>
     </main>
 
-    <script src="scripts/main.js"></script>
+    <script>
+        // Redirect to index.html after submitting the form
+        document.getElementById('add-post-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            window.location.href = 'index.html'; // Redirect to index.html
+        });
+    </script>
+
+    
 </body>
 </html>
