@@ -6,43 +6,67 @@
     <title>Add Post</title>
     <link rel="stylesheet" href="res/style/style.css">
     <style>
-        /* Ensures the footer is always at the bottom */
-        body, html {
-            height: 100%;
-            margin: 0;
+        /* Styles for the page layout */
+        body {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            width: 100%;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header nav a {
+            font-size: 16px;
+            text-decoration: none;
+            color: black;
+            margin-right: 20px;
+        }
+
+        .user-profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
         }
 
         main {
-            flex: 1;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px); /* Fill the remaining height */
         }
 
         form {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            max-width: 600px;
-            margin: auto;
-            padding: 1rem;
-            background-color: #f4f4f4;
-            border-radius: 8px;
+            gap: 10px;
+            width: 300px;
+        }
+
+        label {
+            font-size: 16px;
         }
 
         textarea {
             width: 100%;
-            height: 150px;
+            height: 100px;
             padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         input[type="file"] {
@@ -56,6 +80,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         input[type="submit"]:hover {
@@ -66,29 +91,24 @@
 <body>
     <header>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="addPost.html">Add Post</a></li>
-            </ul>
+            <a href="index.html">Home</a>
         </nav>
+        <div class="user-profile">
+            <img src="res/img/user.png" alt="User Icon">
+        </div>
     </header>
 
     <main>
-        <h1>Add a New Post</h1>
         <form id="add-post-form">
-            <label for="post-body">Post Body:</label>
+            <label for="post-body">Post body:</label>
             <textarea id="post-body" name="body" placeholder="Write your post here..."></textarea>
 
-            <label for="post-image">Select File (Optional):</label>
+            <label for="post-image">Select file:</label>
             <input type="file" id="post-image" name="file">
 
-            <input type="submit" value="Add Post">
+            <input type="submit" value="Create post">
         </form>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Your Team Name. All rights reserved.</p>
-    </footer>
 
     <script src="scripts/main.js"></script>
 </body>
