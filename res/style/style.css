@@ -41,7 +41,7 @@ nav ul li a:hover {
 }
 /* User profile on the right */
 .user-profile {
-    margin-left: auto; /* Ensures it stays on the far right */
+    margin-left: auto;
 }
 .user-profile img {
     width: 40px;
@@ -54,11 +54,14 @@ main {
     justify-content: center;
 }
 .posts {
+    flex-grow: 1; /* This will fill the remaining space */
+    width: calc(60% - 20px);
     width: 600px;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
+    margin: 0 20px;
 }
 .post {
     border-bottom: 1px solid #ddd;
@@ -115,4 +118,24 @@ footer {
     background-color: #333;
     color: white;
     margin-top: 20px;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: calc(10% - 20px);
+    min-height: calc(100vh - 60px); /* Full height of the viewport minus header height */
+}
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .posts {
+        width: 100%;
+        padding: 10px;
+    }
 }
