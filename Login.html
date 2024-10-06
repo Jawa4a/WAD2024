@@ -19,13 +19,20 @@
             <img src="res/img/user.png" alt="User Icon">
         </div>
     </header>
-
     <main>
-        <form id="add-post-form">
-            <p>Welcome to PostIt</p>
-        </form>
-    </main>
-
-    
+    <form action="index.html"> 
+        <p><span class="dif">Welcome to PostIt</span></p>
+        <p><a href="index.html">Create an account</a><br>or<br>Please log in</p>
+        <div class="form-box">
+          <div class="form-group">
+            <input type="email" id="email" name="email" required placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="password" id="password" name="password" required placeholder="Password">
+        </div>
+        <button type="submit">Log in</button>
+    </form>
+    <p><a href="index.html">Forget password</a></p>
+</main>
 </body>
 </html>
