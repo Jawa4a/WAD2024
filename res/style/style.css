@@ -51,8 +51,6 @@ main {
 }
 .posts {
     flex-grow: 1;
-    width: calc(60% - 20px);
-    
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
