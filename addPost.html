@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Post</title>
+    <link rel="stylesheet" href="res/style/style.css">
     <link rel="stylesheet" href="res/style/addPost.css">
-    
 </head>
 <body>
     <header>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-
             </ul>
         </nav>
         <div class="user-profile">
@@ -21,19 +20,15 @@
                 </a>
         </div>
     </header>
-
     <main>
         <form id="add-post-form">
             <label for="post-body">Post body:</label>
             <textarea id="post-body" name="body" placeholder="textarea"></textarea>
-
             <label for="post-image">Select file:</label>
             <input type="file" id="post-image" name="file">
-
             <input type="submit" value="Create post">
         </form>
     </main>
-
     <script>
         // Redirect to index.html after submitting the form
         document.getElementById('add-post-form').addEventListener('submit', function(event) {
@@ -41,7 +36,5 @@
             window.location.href = 'index.html'; // Redirect to index.html
         });
     </script>
-
-    
 </body>
 </html>
