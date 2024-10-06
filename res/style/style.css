@@ -5,7 +5,6 @@ body {
     box-sizing: border-box;
     background-color: #f0f0f0;
 }
-
 header {
     background-color: #333;
     padding: 10px 20px;
@@ -13,7 +12,6 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-/* Navigation (ul) */
 nav {
     display: flex;
     justify-content: space-between;
@@ -33,12 +31,11 @@ nav ul li a {
     padding: 5px 10px;
     border-radius: 5px;
 }
-
-/* Hover effect on Home and Add Post */
 nav ul li a:hover {
     background-color: #555;
+    text-decoration: none;
 }
-/* User profile on the right */
+
 .user-profile {
     margin-left: auto;
 }
@@ -53,7 +50,7 @@ main {
     justify-content: center;
 }
 .posts {
-    flex-grow: 1; /* This will fill the remaining space */
+    flex-grow: 1;
     width: calc(60% - 20px);
     width: 600px;
     background-color: white;
@@ -69,7 +66,6 @@ main {
 .post:last-child {
     border-bottom: none;
 }
-/* Post header */
 .post-header {
     display: flex;
     align-items: center;
@@ -84,7 +80,6 @@ main {
     color: gray;
     font-size: 0.9em;
 }
-/* Post content */
 .post-content {
     margin-top: 10px;
 }
@@ -95,7 +90,6 @@ main {
 .post-content p {
     margin-top: 10px;
 }
-/* Post footer */
 .post-footer {
     margin-top: 10px;
 }
@@ -110,7 +104,6 @@ main {
 .like-button:hover {
     background-color: #555;
 }
-/* Footer */
 footer {
     text-align: center;
     padding: 10px;
@@ -126,15 +119,17 @@ footer {
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     width: calc(10% - 20px);
-    min-height: calc(100vh - 60px); /* Full height of the viewport minus header height */
+    min-height: calc(100vh - 60px);
 }
 @media (max-width: 768px) {
     .sidebar {
         display: none;
     }
-
     .posts {
         width: 100%;
         padding: 10px;
     }
 }
+div > p { margin: 10px; }
+h1 + p { color: orange; }
+h1 ~ p { color: purple; }
