@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     */
     // Fetch data from the local JSON file
-    fetch('../../res/json/myJson.json')
+    fetch('../res/json/myJson.json')
         .then(response => response.json())
         .then(data => {
             console.log("Fetched Data from Local JSON:", data);
