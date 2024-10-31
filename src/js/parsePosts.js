@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     */
     // Fetch data from the local JSON file
-    fetch('https://jawa4a.github.io/WAD2024/res/json/myJson.json')
+    fetch('../../res/json/myJson.json')
         .then(response => response.json())
         .then(data => {
             console.log("Fetched Data from Local JSON:", data);
