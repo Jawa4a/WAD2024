@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="post-content">
                     ${post.attachments.map(attachment => {
                         if (attachment.type === 'image') {
-                            return `<img class="post-image" src="../../res/img/${attachment.url}" alt="${attachment.description}" />`;
+                            return `<img class="post-image" src="./res/img/${attachment.url}" alt="${attachment.description}" />`;
                         } else if (attachment.type === 'file') {
-                            return `<a href="../../res/docs/${attachment.url}" download class="download-link">${attachment.description}</a>`;
+                            return `<a href="./res/docs/${attachment.url}" download class="download-link">${attachment.description}</a>`;
                         }
                         return '';
                     }).join('')}
