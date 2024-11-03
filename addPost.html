@@ -16,9 +16,14 @@
             </ul>
         </nav>
         <div class="user-profile">
-            <a href="Login.html">
-                    <img src="res/img/user.png" alt="User Icon">
-                </a>
+            <a href="javascript:void(0);" onclick="toggleDropdown()">
+                <img src="res/img/user.png" alt="User Icon">
+            </a>
+            <div id="userDropdown" class="dropdown-content">
+                <p>John Doe</p>
+                <p>johndoe@ut.ee</p>
+                <p>logout</p>
+            </div>
         </div>
     </header>
     <main>
@@ -37,5 +42,6 @@
             window.location.href = 'index.html'; // Redirect to index.html
         });
     </script>
+    <script src="./res/js/dropdown.js"></script>
 </body>
 </html>
