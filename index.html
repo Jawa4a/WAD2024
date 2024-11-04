@@ -13,13 +13,18 @@
     <header>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="html.html">Home</a></li>
                 <li><a href="addPost.html">Add Post</a></li>
             </ul>
             <div class="user-profile">
-                <a href="Login.html">
+                <a href="javascript:void(0);" onclick="toggleDropdown()">
                     <img src="res/img/user.png" alt="User Icon">
                 </a>
+                <div id="userDropdown" class="dropdown-content">
+                    <p>John Doe</p>
+                    <p>johndoe@ut.ee</p>
+                    <p>logout</p>
+                </div>
             </div>
         </nav>
     </header>
@@ -27,7 +32,7 @@
     <main>
         <div class="sidebar"></div>
         <section class="posts">
-            <article class="post">
+            <!--<article class="post">
                 <div class="post-header">
                     <img class="avatar" src="res/img/user.png" alt="Avatar">
                     <span class="date">Oct 23, 2022</span>
@@ -92,7 +97,7 @@
                 <div class="post-footer">
                     <button class="like-button">👍 Like</button>
                 </div>
-            </article>
+            </article>-->
         </section>
         <div class="sidebar"></div>
     </main>
@@ -100,5 +105,7 @@
     <footer>
         <p>&copy; 2024 My Blog</p>
     </footer>
+    <script src="./res/js/dropdown.js"></script>
+    <script src="./src/js/parsePosts.js"></script>
 </body>
 </html>

@@ -35,10 +35,6 @@ nav ul li a:hover {
     background-color: #555;
     text-decoration: none;
 }
-
-.user-profile {
-    margin-left: auto;
-}
 .user-profile img {
     width: 40px;
     height: 40px;
@@ -102,6 +98,7 @@ main {
 .like-button:hover {
     background-color: #555;
 }
+
 footer {
     text-align: center;
     padding: 10px;
@@ -128,6 +125,31 @@ footer {
         padding: 10px;
     }
 }
-div > p { margin: 10px; }
-h1 + p { color: orange; }
-h1 ~ p { color: purple; }
+
+.user-profile {
+    margin-left: auto;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgb(197, 197, 197);
+    border: 1px solid #ccc;
+    min-width: 160px;
+    padding: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content p{
+    margin: 5px 0;
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
