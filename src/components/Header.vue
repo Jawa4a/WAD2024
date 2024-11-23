@@ -2,7 +2,7 @@
     <header>
       <nav>
         <ul>
-          <li><router-link to="/home">Home</router-link></li>
+          <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/login">Add Post</router-link></li>
         </ul>
         <div class="user-profile">

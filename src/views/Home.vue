@@ -21,7 +21,6 @@ data: function() {
     },
     computed: {
         getAllPosts(){
-          // console.log('Posts:', this.$store.getters.posts)
             return this.$store.getters.posts
         }
     }

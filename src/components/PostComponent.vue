@@ -21,7 +21,8 @@
       </div>
   
       <div class="post-footer">
-        <button class="like-button">👍 Like</button>
+        <button class="like-button" @click="likePost">👍 {{ likeText }}</button>
+        
       </div>
     </div>
   </template>
@@ -35,9 +36,18 @@ export default {
       required: true,
     },
   },
-  // mounted() {
-  //   console.log('Rendering post:', this.post);
-  // },
+  computed: {
+    likeText() {
+      return this.post.likes === 1
+        ? `${this.post.likes} like`
+        : `${this.post.likes} likes`;
+    },
+  },
+  methods: {
+    likePost() {
+      this.$store.commit('incrementLikes', this.post.postId);
+    },
+  },
 };
   </script>
   
