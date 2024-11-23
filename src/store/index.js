@@ -132,6 +132,9 @@ strict: true,
         post.likes++;
       }
     },
+    zeroizeLikes(state) {
+        state.posts.forEach(s => s.likes=0);
+    }
   },
   actions: {
   },
