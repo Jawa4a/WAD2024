@@ -1,7 +1,7 @@
 <template>
     <div class="post">
       <div class="post-header">
-        <img class="avatar" src="res/img/user.png" alt="Avatar" />
+        <img class="avatar" src="../assets/user.png" alt="Avatar" />
         <span class="username">{{ post.username }}</span>
         <span class="date">
           {{ new Date(post.createdTime).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) }}
@@ -11,18 +11,8 @@
       <div class="post-content">
         <div v-if="post.attachments && post.attachments.length > 0">
           <div v-for="(attachment, index) in post.attachments" :key="index">
-            <img
-              v-if="attachment.type === 'image'"
-              class="post-image"
-              :src="attachment.url"
-              :alt="attachment.description"
-            />
-            <a
-              v-if="attachment.type === 'file'"
-              :href="attachment.url"
-              download
-              class="download-link"
-            >
+            <img v-if="attachment.type === 'image'" class="post-image" :src="attachment.url" :alt="attachment.description"/>
+            <a v-if="attachment.type === 'file'" :href="attachment.url" download class="download-link">
               {{ attachment.description }}
             </a>
           </div>
@@ -37,15 +27,18 @@
   </template>
   
   <script>
-  export default {
-    name: 'PostComponent',
-    props: {
-      post: {
-        type: Object,
-        required: true,
-      },
+export default {
+  name: 'PostComponent',
+  props: {
+    post: {
+      type: Object,
+      required: true,
     },
-  };
+  },
+  // mounted() {
+  //   console.log('Rendering post:', this.post);
+  // },
+};
   </script>
   
 <style scoped>

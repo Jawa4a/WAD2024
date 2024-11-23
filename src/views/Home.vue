@@ -2,7 +2,7 @@
 <div class="home-container">
 <Sidebar />
 <section class="posts">
-<Post v-for="post in posts" :key="post.id" :post="post" />
+<PostComponent v-for="post in getAllPosts" :key="post.postId" :post="post" />
 </section>
 <Sidebar />
 <Footer />
@@ -11,21 +11,23 @@
 
 <script>
 import Sidebar from '../components/Sidebar.vue';
-import Post from '../components/PostComponent.vue';
-import postsData from '../assets/myJson.json';
+import PostComponent from '../components/PostComponent.vue';
+// import postsData from '../assets/myJson.json';
 
 export default {
+  components: {Sidebar,PostComponent},
 name: 'HomeView',
-components: {
-  Sidebar,
-  Post,
-},
-data() {
-  return {
-    posts: postsData,
-  };
-},
+data: function() {
+            return {}
+    },
+    computed: {
+        getAllPosts(){
+          // console.log('Posts:', this.$store.getters.posts)
+            return this.$store.getters.posts
+        }
+    }
 };
+
 </script>
 
 <style scoped>
