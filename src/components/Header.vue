@@ -3,17 +3,17 @@
       <nav>
         <ul>
           <li><router-link to="/home">Home</router-link></li>
-          <li><router-link to="/add-post">Add Post</router-link></li>
+          <li><router-link to="/login">Add Post</router-link></li>
         </ul>
         <div class="user-profile">
           <a href="javascript:void(0);" @click="toggleDropdown">
             <img src="@/assets/user.png" alt="User Icon">
           </a>
-          <div v-if="isDropdownVisible" class="dropdown-content">
+          <!-- <div v-if="isDropdownVisible" class="dropdown-content">
             <p>{{ user.name }}</p>
             <p>{{ user.email }}</p>
             <p @click="logout">Logout</p>
-          </div>
+          </div> -->
         </div>
       </nav>
     </header>

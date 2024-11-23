@@ -5,7 +5,6 @@
 <PostComponent v-for="post in getAllPosts" :key="post.postId" :post="post" />
 </section>
 <Sidebar />
-<Footer />
 </div>
 </template>
 
