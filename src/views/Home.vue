@@ -1,6 +1,6 @@
 <template>
   <div class="zeroContainer">
-  <button class="zeroize" @click="zeroize">set likes to 0</button>
+  <button class="zeroize" @click="zeroize">reset likes</button>
   </div>
 <div class="home-container">
 <Sidebar />
