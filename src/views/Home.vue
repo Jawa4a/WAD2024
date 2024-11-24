@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar.vue';
-import PostComponent from '../components/PostComponent.vue';
-// import postsData from '../assets/myJson.json';
+import Sidebar from '@/components/Sidebar.vue';
+import PostComponent from '@/components/PostComponent.vue';
+// import postsData from '@/assets/myJson.json';
 
 export default {
   components: {Sidebar,PostComponent},
