@@ -20,7 +20,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Centers the form vertically */
-  background-color: #f5f5f5; /* Light gray background for better visibility */
+  height: 100vh;
+  background-color: #f5f5f5;
 }
 </style>
