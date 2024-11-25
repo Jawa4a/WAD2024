@@ -122,22 +122,33 @@ strict: true,
   },
   getters: {
     posts(state) {
-        return state.posts;
-      },
+      return state.posts;
+    },
   },
   mutations: {
     incrementLikes(state, postId) {
       const post = state.posts.find((p) => p.postId === postId);
       if (post) {
         post.likes++;
+        localStorage.setItem('posts', JSON.stringify(state.posts));
       }
     },
     zeroizeLikes(state) {
-        state.posts.forEach(s => s.likes=0);
-    }
+      state.posts.forEach((s) => (s.likes = 0));
+      localStorage.setItem('posts', JSON.stringify(state.posts));
+    },
+    setPosts(state, posts) {
+      state.posts = posts;
+      localStorage.setItem('posts', JSON.stringify(state.posts));
+    },
   },
   actions: {
+    loadPosts({ commit }) {
+      const savedPosts = JSON.parse(localStorage.getItem('posts'));
+      if (savedPosts) {
+        commit('setPosts', savedPosts);
+      }
+    },
   },
-  modules: {
-  }
-})
+  modules: {},
+});

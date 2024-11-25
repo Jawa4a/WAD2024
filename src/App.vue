@@ -16,6 +16,16 @@ export default {
     Header,
     Footer,
   },
+  methods: {
+    setFavicon(url) {
+    let link = document.querySelector("link[rel*='icon']");
+    link.href = require('@/assets/jest-js-icon.svg');
+  },
+  },
+  mounted() {
+    document.title = "Vue App";
+    this.setFavicon();
+  },
 };
 </script>
 
