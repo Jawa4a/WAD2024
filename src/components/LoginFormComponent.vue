@@ -33,7 +33,10 @@
         </ul>
       </div>
 
-      <button type="submit">Login</button>
+      <button type="submit" style="font-weight: bold;">Login</button>
+      <div class="signupLinkContainer">
+      <router-link to="/Signup" class="signupLink">Register</router-link>
+    </div>
     </form>
   </div>
 </template>
@@ -49,41 +52,36 @@ export default {
     };
   },
   methods: {
-    validatePassword() {
-      this.errorMessages = [];
-      const password = this.password;
+    async validatePassword() {
+        console.log("validating password");
+        this.errorMessages = [];
+        try {
+            const response = await fetch('http://localhost:3000/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: this.username,
+                    // email: this.email,
+                    password: this.password,
+                }),
+                credentials: 'include',
+            });
 
-      // Validation Rules
-      if (password.length < 8 || password.length >= 15) {
-        this.errorMessages.push(
-          "Password must be between 8 and 15 characters long."
-        );
-      }
-      if (!/^[A-Z]/.test(password)) {
-        this.errorMessages.push("Password must start with an uppercase letter.");
-      }
-      if (!/.*[A-Z].*/.test(password)) {
-        this.errorMessages.push(
-          "Password must include at least one uppercase letter."
-        );
-      }
-      if ((password.match(/[a-z]/g) || []).length < 2) {
-        this.errorMessages.push(
-          "Password must include at least two lowercase letters."
-        );
-      }
-      if (!/.*\d.*/.test(password)) {
-        this.errorMessages.push(
-          "Password must include at least one numeric value."
-        );
-      }
-      if (!password.includes("_")) {
-        this.errorMessages.push('Password must include the character "_".');
-      }
-
-      if (this.errorMessages.length === 0) {
-        alert("Signup successful!");
-      }
+            if (response.ok) {
+                alert("Login successful!");
+                this.$router.push('/');
+            } else {
+                const data = await response.json();
+                if (data.errors) {
+                    this.errorMessages = data.errors;
+                } else {
+                    this.errorMessages = ["An unexpected error occurred."];
+                }
+            }
+        } catch (error) {
+            console.error("Login error:", error.message);
+            this.errorMessages = ["An unexpected error occurred."];
+        }
     },
   },
 };
@@ -143,5 +141,13 @@ button:hover {
   font-size: 0.9em;
   margin-top: 5px;
   text-align: center;
+}
+.signupLinkContainer{
+  margin-top: 20px;
+  text-align: center;
+}
+.signupLink{
+  text-decoration: none;
+  color:black;
 }
 </style>
