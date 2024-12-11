@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
 strict: true,
   state: {
+    jwt: null,
     posts: [
       {
           "postId": 1,
@@ -33,8 +34,8 @@ strict: true,
                   "description": "Tartu 2022"
               }
           ]
-      },
-      {
+      	},
+      	{
           "postId": 3,
           "uid": 3,
           "username": "Wombat",
@@ -121,11 +122,15 @@ strict: true,
   ]  
   },
   getters: {
+    isAuthenticated: (state) => !!state.jwt,
     posts(state) {
       return state.posts;
     },
   },
   mutations: {
+    setJWT(state, jwt) {
+      state.jwt = jwt;
+    },
     incrementLikes(state, postId) {
       const post = state.posts.find((p) => p.postId === postId);
       if (post) {
@@ -143,6 +148,9 @@ strict: true,
     },
   },
   actions: {
+    saveJWT({ commit }, jwt) {
+      commit('setJWT', jwt);
+    },
     loadPosts({ commit }) {
       const savedPosts = JSON.parse(localStorage.getItem('posts'));
       if (savedPosts) {

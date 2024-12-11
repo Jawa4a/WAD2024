@@ -8,6 +8,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
@@ -25,5 +26,32 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach(async (to, from, next) => {
+	if (to.meta.requiresAuth) {
+	  try {
+		const response = await fetch('http://localhost:3000/auth/status', {
+		  credentials: 'include',
+		});
+  
+		if (response.ok) {
+		  const data = await response.json();
+		  if (data.authenticated) {
+			next();
+		  } else {
+			next('/login');
+		  }
+		} else {
+		  next('/login');
+		}
+	  } catch (error) {
+		console.error('Error checking authentication status:', error);
+		next('/login');
+	  }
+	} else {
+	  next();
+	}
+  });
+  
 
 export default router;

@@ -35,6 +35,24 @@
     toggleDropdown() {
       this.isDropdownVisible = !this.isDropdownVisible;
     },
+    async logout(){
+		try {
+		const response = await fetch('http://localhost:3000/auth/logout', {
+			credentials: 'include',
+		});
+      	if (response.ok){
+        	alert('Logged out successfully!');
+			this.toggleDropdown();
+        	this.$router.push('/login');
+      	} else {
+            console.error('Failed to log out.');
+      	}
+      	} catch (error) {
+      	    console.error('Error during logout:', error);
+      	}	
+
+      
+    }
   },
 };
   </script>

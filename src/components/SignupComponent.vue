@@ -62,6 +62,7 @@
             if (response.ok) {
                 alert("Signup successful!");
                 this.$router.push('/login');
+                console.log(response);
             } else {
                 const data = await response.json();
                 if (data.errors) {
