@@ -126,3 +126,29 @@ app.get('/auth/logout', (req, res) => {
     console.log('delete jwt request arrived');
     res.status(202).clearCookie('jwt').json({ "Msg": "cookie cleared" }).send
 });
+
+// Retrieve posts.
+app.get('/posts', async (req, res) => {
+    try {
+        const posts = await pool.query("SELECT * FROM posts ORDER BY created_time DESC");
+        res.status(200).json(posts.rows);
+    } catch (error) {
+        console.error("Error fetching posts:", error.message);
+        res.status(500).json({ error: "Failed to fetch posts" });
+    }
+});
+
+app.post('/posts', async (req, res) => {
+    const { uid, username, body, attachments } = req.body;
+
+    try {
+        const newPost = await pool.query(
+            "INSERT INTO posts (uid, username, body, attachments) VALUES ($1, $2, $3, $4) RETURNING *",
+            [uid, username, body, attachments || []]
+        );
+        res.status(201).json(newPost.rows[0]);
+    } catch (error) {
+        console.error("Error creating post:", error.message);
+        res.status(500).json({ error: "Failed to create post" });
+    }
+});
