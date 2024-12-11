@@ -23,9 +23,8 @@ const execute = async(query) => {
 };
 
 // Create database if not exists.
-// DROP TABLE "users"
+// DROP TABLE users;
 const createTblQuery = `
-    
     CREATE TABLE IF NOT EXISTS "users" (
         id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
         username VARCHAR(200) NOT NULL UNIQUE,

@@ -8,6 +8,14 @@ Node.js \& NPM
 ```
 git clone https://github.com/Jawa4a/WAD2024/tree/server
 ```
+or
+```
+git clone https://github.com/Jawa4a/WAD2024
+```
+and 
+```
+git checkout server
+```
 
 ## Navigate to the project directory
 ```

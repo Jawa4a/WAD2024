@@ -31,7 +31,7 @@ app.listen(port, () => {
 });
 
 // is used to check whether a user is authinticated
-app.get('   ', async(req, res) => {
+app.get('/auth/status', async(req, res) => {
     console.log('authentication request has been arrived');
     const token = req.cookies.jwt; // assign the token named jwt to the token const
     //console.log("token " + token);
@@ -80,11 +80,11 @@ app.post('/auth/signup', async(req, res) => {
         res
             .status(201)
             .cookie('jwt', token, { maxAge: 6000000, httpOnly: true })
-            .json({ user_id: authUser.rows[0].id })
+            .json({ authenticated: true, user_id: authUser.rows[0].id })
             .send;
     } catch (err) {
         console.error(err.message);
-        res.status(400).send(err.message);
+        res.status(400).json({ authenticated: false, error: err.message });
     }
 });
 
@@ -114,10 +114,10 @@ app.post('/auth/login', async(req, res) => {
         res
             .status(201)
             .cookie('jwt', token, { maxAge: 6000000, httpOnly: true })
-            .json({ user_id: user.rows[0].id })
+            .json({ authenticated: true, user_id: user.rows[0].id })
             .send;
     } catch (error) {
-        res.status(401).json({ error: error.message });
+        res.status(401).json({ authenticated: false, error: error.message });
     }
 });
 
