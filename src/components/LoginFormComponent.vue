@@ -70,13 +70,6 @@ export default {
             if (response.ok) {
                 alert("Login successful!");
                 this.$router.push('/');
-                const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-                    const [key, value] = cookie.split('=');
-                    acc[key] = value;
-                    return acc;
-                }, {});
-                const jwt = cookies.jwt;
-                this.$store.dispatch('saveJWT', jwt);
 				console.log(response);
             } else {
                 const data = await response.json();

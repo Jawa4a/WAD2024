@@ -21,6 +21,9 @@ name: 'HomeView',
 data: function() {
             return {}
     },
+    async created() {
+      await this.$store.dispatch("fetchPosts");
+    },
     computed: {
         getAllPosts(){
             return this.$store.getters.posts
