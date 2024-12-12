@@ -4,6 +4,7 @@
         <ul>
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/login">Login</router-link></li>
+          <li><router-link to="/about">About Us</router-link></li>
         </ul>
         <div class="user-profile">
           <a href="javascript:void(0);" @click="toggleDropdown">
@@ -70,6 +71,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    font-weight: bold;
   }
   nav ul {
     list-style-type: none;

@@ -3,7 +3,7 @@
         <Sidebar />
         <div class="postContainer">
             <div v-if="getPost" class="post">
-                <PostComponent :post="getPost" :disableLinks="true" />
+                <PostComponent :post="getPost" />
             </div>
         </div>
         <Sidebar />

@@ -12,6 +12,7 @@
   
   <style scoped>
   footer {
+    font-weight: bold;
     text-align: center;
     padding: 10px;
     background-color: #333;

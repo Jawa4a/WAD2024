@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
 import Signup from '@/views/Signup.vue';
 import singlepost from '@/views/Post.vue';
+import about from '@/views/AboutView.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/singlepost/:id',
     name: 'singlepost',
     component: singlepost,
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: about,
   }
 ];
 
