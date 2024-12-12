@@ -19,7 +19,22 @@ export default {
   methods: {
     setFavicon(url) {let link = document.querySelector("link[rel*='icon']");link.href = require('@/assets/jest-js-icon.svg');},
   },
-  mounted() {document.title = "Vue App";this.setFavicon();},
+  async mounted() {document.title = "Vue App";this.setFavicon();
+    try {
+      const response = await fetch("http://localhost:3000/auth/status", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (data.authenticated) {
+        this.$store.commit("setAuthentication", true); // Update Vuex store
+      } else {
+        this.$store.commit("setAuthentication", false);
+      }
+    } catch (error) {
+      console.error("Error checking authentication status:", error);
+      this.$store.commit("setAuthentication", false);
+    }
+  },
 };
 </script>
 

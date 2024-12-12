@@ -3,7 +3,7 @@
       <nav>
         <ul>
           <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/login">Login</router-link></li>
+          <li v-if="!isAuthenticated"><router-link to="/login">Login</router-link></li>
           <li><router-link to="/about">About Us</router-link></li>
         </ul>
         <div class="user-profile">
@@ -23,6 +23,11 @@
   <script>
   export default {
   name: 'Header',
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
+  },
   data() {
     return {
       isDropdownVisible: false,
@@ -43,6 +48,7 @@
 		});
       	if (response.ok){
         	alert('Logged out successfully!');
+          this.$store.dispatch("logout");
 			this.toggleDropdown();
         	this.$router.push('/login');
       	} else {
@@ -65,13 +71,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: bold;
   }
   nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    font-weight: bold;
   }
   nav ul {
     list-style-type: none;

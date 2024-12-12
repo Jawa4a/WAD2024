@@ -3,17 +3,29 @@ import { createStore } from 'vuex'
 export default createStore({
 strict: true,
   state: {
+    isAuthenticated: false,
     posts: [],
   },
   getters: {
-    posts(state) {
-      return state.posts;
-    },
-    post(state, id) {
-      return state.posts.find(p => p.id===id);
-    }
-  },
+
+		isAuthenticated(state) {
+			return state.isAuthenticated;
+		},
+
+		posts(state) {
+		return state.posts;
+		},
+		
+		post(state, id) {
+		return state.posts.find(p => p.id===id);
+		}
+
+	},
   mutations: {
+
+    setAuthentication(state, status) {
+      state.isAuthenticated = status;
+    },
 
     incrementLikes(state, id) {
       const postInArray = state.posts.find((p) => p.id === id);
@@ -31,9 +43,16 @@ strict: true,
       state.posts = posts;
       localStorage.setItem('posts', JSON.stringify(state.posts));
     },
-  },
+},
 
   actions: {
+
+    authenticate({ commit }) {
+      commit('setAuthentication', true);
+    },
+    logout({ commit }) {
+      commit('setAuthentication', false);
+    },
 
     async fetchPosts({ commit }) {
       try {

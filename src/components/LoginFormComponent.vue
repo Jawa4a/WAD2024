@@ -69,6 +69,7 @@ export default {
 
             if (response.ok) {
                 alert("Login successful!");
+                this.$store.dispatch("authenticate");
                 this.$router.push('/');
 				console.log(response);
             } else {
