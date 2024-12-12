@@ -1,7 +1,4 @@
-// database.js
 const Pool = require('pg').Pool;
-
-// Database data.
 const pool = new Pool({
     user: "postgres",
     password: "1122",
@@ -10,19 +7,17 @@ const pool = new Pool({
     port: "5432"
 });
 
-// Query execution.
 const execute = async(query) => {
     try {
-        await pool.connect(); // create a connection
-        await pool.query(query); // executes a query
+        const client = await pool.connect();
+        await client.query(query);
+        client.release();
         return true;
     } catch (error) {
         console.error(error.stack);
         return false;
     }
 };
-
-// Create database if not exists.
 // DROP TABLE users;
 const createTblQuery = `
     CREATE TABLE IF NOT EXISTS "users" (
@@ -32,15 +27,9 @@ const createTblQuery = `
         password VARCHAR(200) NOT NULL 
     );`;
 
-execute(createTblQuery).then(result => {
-    if (result) {
-        console.log('Table "users" is created');
-    }
-});
-
 const createPostTblQuery = `
-    DROP TABLE posts;
-    CREATE TABLE IF NOT EXISTS "posts" (
+    DROP TABLE IF EXISTS "posts";
+    CREATE TABLE "posts" (
         id SERIAL PRIMARY KEY,
         uid INTEGER NOT NULL,
         username VARCHAR(200) NOT NULL,
@@ -48,15 +37,25 @@ const createPostTblQuery = `
         likes INTEGER DEFAULT 0,
         body VARCHAR(255) NOT NULL,
         attachments JSON DEFAULT '[]'
-    );`;
-execute(createPostTblQuery).then(result => {
-        if (result) {
-            console.log('Table "posts" is created');
-        }
-    });
+    );
+`;
+
+const initializeDatabase = async () => {
+    console.log("Initializing database...");
+    const tablesCreated = await execute(createPostTblQuery);
+    if (tablesCreated) {
+        console.log("Tables created successfully.");
+        await insertPosts();
+    } else {
+        console.error("Failed to create tables.");
+    }
+};
+
+initializeDatabase();
 
 module.exports = pool;
 
+// Posts data JSON.
 const posts = [
     {
         "postId": 1,
@@ -173,33 +172,24 @@ const posts = [
         "attachments": []
     }
 ];
-
+// Insert post data into database on server creation.
 const insertPosts = async () => {
     try {
-        await pool.connect();
+        const result = await pool.query("SELECT COUNT(*) FROM posts");
+        const count = parseInt(result.rows[0].count, 10);
+
+        if (count > 0) {
+            console.log("Posts already exist, skipping insertion.");
+            return;
+        }
 
         for (const post of posts) {
             const { uid, username, createdTime, likes, body, attachments } = post;
-
-            const query = `
-                INSERT INTO posts (uid, username, created_time, likes, body, attachments)
-                VALUES ($1, $2, $3, $4, $5, $6)
-                RETURNING id;
-            `;
-
-            const values = [
-                uid,
-                username,
-                createdTime,
-                likes,
-                body,
-                JSON.stringify(attachments)
-            ];
+            const query = `INSERT INTO posts (uid, username, created_time, likes, body, attachments) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+            const values = [uid, username, createdTime, likes, body, JSON.stringify(attachments)];
             const result = await pool.query(query, values);
             console.log(`Inserted post with ID: ${result.rows[0].id}`);
         }
-
-        console.log("All posts have been inserted successfully!");
     } catch (error) {
         console.error("Error inserting posts:", error.message);
     }

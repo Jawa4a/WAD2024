@@ -17,6 +17,9 @@ app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 app.use(express.json());  // Parses incoming requests with JSON payloads and is based on body-parser.
 app.use(cookieParser());  // Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
 
+const path = require('path');
+app.use('/res', express.static(path.join(__dirname, 'res')));
+
 
 const secret = "gdgdhdbcb770785rgdzqws"; // use a stronger secret
 const maxAge = 60 * 60; //unlike cookies, the expiresIn in jwt token is calculated by seconds not milliseconds
@@ -127,17 +130,6 @@ app.get('/auth/logout', (req, res) => {
     res.status(202).clearCookie('jwt').json({ "Msg": "cookie cleared" }).send
 });
 
-// Retrieve posts.
-app.get('/posts', async (req, res) => {
-    try {
-        const posts = await pool.query("SELECT * FROM posts ORDER BY created_time DESC");
-        res.status(200).json(posts.rows);
-    } catch (error) {
-        console.error("Error fetching posts:", error.message);
-        res.status(500).json({ error: "Failed to fetch posts" });
-    }
-});
-
 app.post('/posts', async (req, res) => {
     const { uid, username, body, attachments } = req.body;
 
@@ -150,5 +142,72 @@ app.post('/posts', async (req, res) => {
     } catch (error) {
         console.error("Error creating post:", error.message);
         res.status(500).json({ error: "Failed to create post" });
+    }
+});
+
+// Retrieve posts.
+// app.get('/posts', async (req, res) => {
+//     try {
+//         const posts = await pool.query("SELECT * FROM posts ORDER BY created_time DESC");
+//         res.status(200).json(posts.rows);
+//     } catch (error) {
+//         console.error("Error fetching posts:", error.message);
+//         res.status(500).json({ error: "Failed to fetch posts" });
+//     }
+// });
+
+// app.get('/posts/:id', async(req, res) => {
+//     try {
+//         console.log("get a post with route parameter  request has arrived");
+//         const { id } = req.params;
+//         const posts = await pool.query(
+//             "SELECT * FROM posts WHERE id = $1", [id]
+//         );
+//         res.json(posts.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// });
+
+app.get('/posts', async (req, res) => {
+    try {
+        const posts = await pool.query("SELECT * FROM posts ORDER BY created_time DESC");
+        const processedPosts = posts.rows.map(post => {
+            post.attachments = post.attachments.map(attachment => {
+                if (attachment.url.startsWith('./')) {
+                    attachment.url = `http://localhost:3000${attachment.url.slice(1)}`;
+                }
+                return attachment;
+            });
+            return post;
+        });
+
+        res.status(200).json(processedPosts);
+    } catch (error) {
+        console.error("Error fetching posts:", error.message);
+        res.status(500).json({ error: "Failed to fetch posts" });
+    }
+});
+
+app.get('/posts/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const post = await pool.query("SELECT * FROM posts WHERE id = $1", [id]);
+
+        if (post.rows.length > 0) {
+            const processedPost = post.rows[0];
+            processedPost.attachments = processedPost.attachments.map(attachment => {
+                if (attachment.url.startsWith('./')) {
+                    attachment.url = `http://localhost:3000${attachment.url.slice(1)}`;
+                }
+                return attachment;
+            });
+            res.status(200).json(processedPost);
+        } else {
+            res.status(404).json({ error: "Post not found" });
+        }
+    } catch (error) {
+        console.error("Error fetching post:", error.message);
+        res.status(500).json({ error: "Failed to fetch post" });
     }
 });
