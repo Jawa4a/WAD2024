@@ -9,25 +9,32 @@ strict: true,
     posts(state) {
       return state.posts;
     },
+    post(state, id) {
+      return state.posts.find(p => p.id===id);
+    }
   },
   mutations: {
-    incrementLikes(state, postId) {
-      const post = state.posts.find((p) => p.postId === postId);
-      if (post) {
-        post.likes++;
-        localStorage.setItem('posts', JSON.stringify(state.posts));
+
+    incrementLikes(state, id) {
+      const postInArray = state.posts.find((p) => p.id === id);
+      if (postInArray) {
+        postInArray.likes++;
       }
     },
+
     zeroizeLikes(state) {
       state.posts.forEach((s) => (s.likes = 0));
       localStorage.setItem('posts', JSON.stringify(state.posts));
     },
+
     setPosts(state, posts) {
       state.posts = posts;
       localStorage.setItem('posts', JSON.stringify(state.posts));
     },
   },
+
   actions: {
+
     async fetchPosts({ commit }) {
       try {
         const response = await fetch("http://localhost:3000/posts", {
@@ -43,12 +50,6 @@ strict: true,
         console.error("Error fetching posts:", error.message);
       }
     },
-    // loadPosts({ commit }) {
-    //   const savedPosts = JSON.parse(localStorage.getItem('posts'));
-    //   if (savedPosts) {
-    //     commit('setPosts', savedPosts);
-    //   }
-    // },
   },
   modules: {},
 });

@@ -4,25 +4,26 @@
         <img class="avatar" src="../assets/user.png" alt="Avatar" />
         <span class="username">{{ post.username }}</span>
         <span class="date">
-          {{ new Date(post.createdTime).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) }}
+          {{ new Date(post.created_time).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) }}
         </span>
       </div>
-  
-      <div class="post-content">
-        <div v-if="post.attachments && post.attachments.length > 0">
-          <div v-for="(attachment, index) in post.attachments" :key="index">
-            <img v-if="attachment.type === 'image'" class="post-image" :src="attachment.url" :alt="attachment.description"/>
-            <a v-if="attachment.type === 'file'" :href="attachment.url" download class="download-link">
-              {{ attachment.description }}
-            </a>
+
+      <router-link :to="'/singlepost/' + post.id" class="linkToPost">
+        <div class="post-content">
+          <div v-if="post.attachments && post.attachments.length > 0">
+            <div v-for="(attachment, index) in post.attachments" :key="index">
+              <img v-if="attachment.type === 'image'" class="post-image" :src="attachment.url" :alt="attachment.description"/>
+              <a v-if="attachment.type === 'file'" :href="attachment.url" download class="download-link" @click.stop>
+                {{ attachment.description }}
+              </a>
+            </div>
           </div>
+          <p>{{ post.body }}</p>
         </div>
-        <p>{{ post.body }}</p>
-      </div>
+      </router-link>
   
       <div class="post-footer">
         <button class="like-button" @click="likePost">👍 {{ likeText }}</button>
-        
       </div>
     </div>
   </template>
@@ -45,7 +46,7 @@ export default {
   },
   methods: {
     likePost() {
-      this.$store.commit('incrementLikes', this.post.postId);
+      this.$store.commit('incrementLikes', this.post.id);
     },
   },
 };
@@ -93,6 +94,10 @@ export default {
 }
 .like-button:hover {
     background-color: #555;
+}
+.linkToPost{
+  text-decoration: none;
+  color: black;
 }
 </style>
   

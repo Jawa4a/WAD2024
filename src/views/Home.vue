@@ -1,14 +1,14 @@
 <template>
   <div class="zeroContainer">
-  <button class="zeroize" @click="zeroize">reset likes</button>
+    <button class="zeroize" @click="zeroize">reset likes</button>
   </div>
-<div class="home-container">
-<Sidebar />
-<section class="posts">
-<PostComponent v-for="post in getAllPosts" :key="post.postId" :post="post" />
-</section>
-<Sidebar />
-</div>
+  <div class="home-container">
+    <Sidebar />
+      <section class="posts">
+        <PostComponent v-for="post in getAllPosts" :key="post.postId" :post="post" />
+      </section>
+    <Sidebar />
+  </div>
 </template>
 
 <script>
@@ -16,13 +16,13 @@ import Sidebar from '@/components/Sidebar.vue';
 import PostComponent from '@/components/PostComponent.vue';
 
 export default {
-  components: {Sidebar,PostComponent},
-name: 'HomeView',
-data: function() {
-            return {}
+    components: {Sidebar,PostComponent},
+    name: 'HomeView',
+    data: function() {
+      	return {}
     },
     async created() {
-      await this.$store.dispatch("fetchPosts");
+      	await this.$store.dispatch("fetchPosts");
     },
     computed: {
         getAllPosts(){
@@ -30,9 +30,9 @@ data: function() {
         }
     },
   methods: {
-  zeroize(){
-    this.$store.commit('zeroizeLikes', this.posts);
-  },
+    zeroize(){
+      this.$store.commit('zeroizeLikes', this.posts);
+    },
   },
 };
 
