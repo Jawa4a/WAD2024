@@ -211,3 +211,15 @@ app.get('/posts/:id', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch post" });
     }
 });
+
+app.delete('/posts', async (req, res) => {
+    console.log("Posts table delete request");
+    try {
+        await pool.query(`TRUNCATE posts;`);
+        res.status(200).json({ message: "Posts deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting posts:", error.message);
+        res.status(500).json({ error: "Failed to delete posts" });
+    }
+});
+
