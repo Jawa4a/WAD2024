@@ -26,6 +26,7 @@ const routes = [
     path: '/singlepost/:id',
     name: 'singlepost',
     component: singlepost,
+    meta: { requiresAuth: true }
   },
   {
     path: '/about',
