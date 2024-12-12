@@ -4,6 +4,7 @@ import Login from '@/views/Login.vue';
 import Signup from '@/views/Signup.vue';
 import singlepost from '@/views/Post.vue';
 import about from '@/views/AboutView.vue';
+import addpost from '@/views/AddPost.vue';
 
 const routes = [
   {
@@ -32,6 +33,12 @@ const routes = [
     path: '/about',
     name: 'about',
     component: about,
+  },
+  {
+    path: '/addpost',
+    name: 'addpost',
+    component: addpost,
+    meta: { requiresAuth: true }
   }
 ];
 

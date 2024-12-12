@@ -1,6 +1,10 @@
 <template>
   <div class="zeroContainer">
-    <button class="zeroize" @click="zeroize">reset likes</button>
+    <ul>
+      <li><button class="zeroize" @click="zeroize">reset likes</button></li>
+      <li><router-link to="/addpost" class="zeroize">Add Post</router-link></li>
+      <li><button class="zeroize" @click="deleteAll">Delete</button></li>
+    </ul>
   </div>
   <div class="home-container">
     <Sidebar />
@@ -30,9 +34,29 @@ export default {
         }
     },
   methods: {
+
     zeroize(){
       this.$store.commit('zeroizeLikes', this.posts);
     },
+
+    async deleteAll() {
+      try {
+        const response = await fetch(`http://localhost:3000/posts`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+          console.log("Posts deleted successfully");
+          location.reload();
+        } else {
+          console.error("Failed to delete posts:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error deleting posts:", error.message);
+      }
+    }
+
   },
 };
 
@@ -46,7 +70,21 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
 }
+
+.zeroContainer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
 .zeroize{
   background: linear-gradient(to bottom right, #000000, #bbbbbb);
   border: 0;
