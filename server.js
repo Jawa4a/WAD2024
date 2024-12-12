@@ -134,6 +134,12 @@ app.post('/posts', async (req, res) => {
     const { uid, username, body, attachments } = req.body;
 
     try {
+        // INSERTING INTO POSTS TABLE:
+        // const { uid, username, createdTime, likes, body, attachments } = post;
+        // const query = `INSERT INTO posts (uid, username, created_time, likes, body, attachments) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+        // const values = [uid, username, createdTime, likes, body, JSON.stringify(attachments)];
+        // const result = await pool.query(query, values);
+
         const newPost = await pool.query(
             "INSERT INTO posts (uid, username, body, attachments) VALUES ($1, $2, $3, $4) RETURNING *",
             [uid, username, body, attachments || []]
