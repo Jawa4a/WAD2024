@@ -69,7 +69,7 @@ const posts = [
         "attachments": [
             {
                 "type": "file",
-                "url": "./res/docs/homework.pdf",
+                "url": "http://localhost:3000/res/docs/homework.pdf",
                 "description": "Download PDF"
             }
         ]
@@ -84,7 +84,7 @@ const posts = [
         "attachments": [
             {
                 "type": "image",
-                "url": "./res/img/gif.gif",
+                "url": "http://localhost:3000/res/img/gif.gif",
                 "description": "Tartu 2022"
             }
         ]
@@ -99,7 +99,7 @@ const posts = [
         "attachments": [
             {
                 "type": "image",
-                "url": "./res/img/tartu2024.jpg",
+                "url": "http://localhost:3000/res/img/tartu2024.jpg",
                 "description": "Tartu 2022"
             }
         ]
@@ -123,7 +123,7 @@ const posts = [
         "attachments": [
             {
                 "type": "image",
-                "url": "./res/img/monday.png",
+                "url": "http://localhost:3000/res/img/monday.png",
                 "description": "Tartu 2022"
             }
         ]
