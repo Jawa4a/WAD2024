@@ -43,6 +43,7 @@ const createPostTblQuery = `
 const initializeDatabase = async () => {
     console.log("Initializing database...");
     const tablesCreated = await execute(createPostTblQuery);
+    const tablesCreatedUsers = await execute(createTblQuery);
     if (tablesCreated) {
         console.log("Tables created successfully.");
         await insertPosts();
