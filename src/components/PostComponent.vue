@@ -4,7 +4,11 @@
         <img class="avatar" src="../assets/user.png" alt="Avatar" />
         <span class="username">{{ post.username }}</span>
         <span class="date">
-          {{ new Date(post.created_time).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) }}
+          {{ new Date(post.created_time).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+          }) }}
         </span>
       </div>
 
