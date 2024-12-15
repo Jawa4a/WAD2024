@@ -2,7 +2,7 @@ const Pool = require('pg').Pool;
 const pool = new Pool({
     user: "postgres",
     password: "1122",
-    database: "",
+    database: "testWad",
     host: "localhost",
     port: "5432"
 });
@@ -44,7 +44,7 @@ const initializeDatabase = async () => {
     console.log("Initializing database...");
     const tablesCreated = await execute(createPostTblQuery);
     const tablesCreatedUsers = await execute(createTblQuery);
-    if (tablesCreated) {
+    if (tablesCreated && tablesCreatedUsers) {
         console.log("Tables created successfully.");
         await insertPosts();
     } else {
