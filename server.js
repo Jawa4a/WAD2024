@@ -144,6 +144,7 @@ app.post('/posts', async (req, res) => {
             "INSERT INTO posts (uid, username, body, attachments) VALUES ($1, $2, $3, $4) RETURNING *",
             [uid, username, body, attachments || []]
         );
+        console.log("Inserted new post into database from: "+ username);
         res.status(201).json(newPost.rows[0]);
     } catch (error) {
         console.error("Error creating post:", error.message);
@@ -178,16 +179,7 @@ app.post('/posts', async (req, res) => {
 app.get('/posts', async (req, res) => {
     try {
         const posts = await pool.query("SELECT * FROM posts ORDER BY created_time DESC");
-        const processedPosts = posts.rows.map(post => {
-            post.attachments = post.attachments.map(attachment => {
-                if (attachment.url.startsWith('./')) {
-                    attachment.url = `http://localhost:3000${attachment.url.slice(1)}`;
-                }
-                return attachment;
-            });
-            return post;
-        });
-
+        const processedPosts = posts.rows;
         res.status(200).json(processedPosts);
     } catch (error) {
         console.error("Error fetching posts:", error.message);
