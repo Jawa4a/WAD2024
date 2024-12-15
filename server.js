@@ -229,3 +229,40 @@ app.delete('/posts', async (req, res) => {
     }
 });
 
+app.delete('/posts/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+      await pool.query('DELETE FROM posts WHERE id = $1', [id]);
+      res.json({ message: "Post deleted successfully" });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Failed to delete post" });
+    }
+  });
+
+app.put('/posts/:id', async (req, res) => {
+  const { id } = req.params;
+  const { body } = req.body;
+  try {
+    await pool.query('UPDATE posts SET body = $1 WHERE id = $2', [body, id]);
+    res.json({ message: "Post updated successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Failed to update post" });
+  }
+});
+
+app.get('/posts/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+      const post = await pool.query('SELECT * FROM posts WHERE id = $1', [id]);
+      res.json(post.rows[0]);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Failed to fetch post" });
+    }
+  });
+  
+
+  
+

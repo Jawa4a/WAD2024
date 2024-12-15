@@ -2,7 +2,7 @@ const Pool = require('pg').Pool;
 const pool = new Pool({
     user: "postgres",
     password: "1122",
-    database: "testWad",
+    database: "WAD4",
     host: "localhost",
     port: "5432"
 });
@@ -20,6 +20,7 @@ const execute = async(query) => {
 };
 // DROP TABLE users;
 const createTblQuery = `
+    DROP TABLE IF EXISTS "users";
     CREATE TABLE IF NOT EXISTS "users" (
         id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
         username VARCHAR(200) NOT NULL UNIQUE,
