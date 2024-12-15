@@ -1,131 +1,178 @@
 <template>
-    <div class="main">
-        <Sidebar />
-        <div class="postContainer">
-            <div v-if="getPost" class="post">
-                <PostComponent :post="getPost" />
-            </div>
+  <div class="main">
+    <Sidebar />
+    <div class="postContainer">
+      <div v-if="getPost" class="post">
+        <PostComponent :post="getPost" />
+        <div class="actions">
+          <button class="delete-button" @click="deletePost">Delete Post</button>
+          <button class="edit-button" @click="toggleEditMode">
+            {{ isEditing ? "Cancel" : "Edit Post" }}
+          </button>
         </div>
-        <Sidebar />
+
+        <!-- Edit Post Section -->
+        <div v-if="isEditing" class="edit-section">
+          <textarea v-model="editedContent" rows="5"></textarea>
+          <button class="save-button" @click="updatePost">Save Changes</button>
+        </div>
+      </div>
+      <div v-else>
+        <p>Post not found!</p>
+      </div>
     </div>
+    <Sidebar />
+  </div>
 </template>
-  
-  
+
 <script>
-import PostComponent from '@/components/PostComponent.vue';
-import Sidebar from '@/components/Sidebar.vue';
+import PostComponent from "@/components/PostComponent.vue";
+import Sidebar from "@/components/Sidebar.vue";
+
 export default {
-    components: { Sidebar, PostComponent },
-    name: "singlepost",
-    data: function() {
-        return {};
+  components: { Sidebar, PostComponent },
+  name: "singlepost",
+  data() {
+    return {
+      isEditing: false,
+      editedContent: "", // Local state for edited post content
+    };
+  },
+  async created() {
+    await this.$store.dispatch("fetchPosts");
+    window.scrollTo(0, 0);
+    if (this.getPost) {
+      this.editedContent = this.getPost.body; // Load post content for editing
+    }
+  },
+  computed: {
+    getPost() {
+      const routeId = Number(this.$route.params.id);
+      return this.$store.getters.posts.find((p) => p.id === routeId);
     },
-    async created() {
-        await this.$store.dispatch("fetchPosts");
-        window.scrollTo(0, 0);
-    },
-    computed: {
-        getPost() {
-            const routeId = Number(this.$route.params.id);
-            const post = this.$store.getters.posts.find((p) => p.id === routeId);
-            return post;
-        },
-    },
-
+  },
   methods: {
-    updatePost() {
-      fetch(`http://localhost:3000/posts/${this.post.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(this.post),
-      })
-        .then((response) => {
-          console.log(response.data);
-          this.$router.push("/");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    toggleEditMode() {
+      this.isEditing = !this.isEditing;
+      if (this.isEditing) {
+        this.editedContent = this.getPost.body; // Reset content when editing starts
+      }
     },
+    async updatePost() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/posts/${this.getPost.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ body: this.editedContent }),
+          }
+        );
 
-    deletePost() {
-      fetch(`http://localhost:3000/posts/${this.post.id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => {
-          console.log(response.data);
-          this.$router.push("/posts");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        if (!response.ok) throw new Error("Failed to update post");
+
+        // Refresh posts in Vuex store
+        await this.$store.dispatch("fetchPosts");
+        this.isEditing = false; // Exit edit mode
+      } catch (e) {
+        console.error("Error updating post:", e.message);
+      }
+    },
+    async deletePost() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/posts/${this.getPost.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) throw new Error("Failed to delete post");
+
+        // Refresh posts and navigate to homepage
+        await this.$store.dispatch("fetchPosts");
+        this.$router.push("/");
+      } catch (e) {
+        console.error("Error deleting post:", e.message);
+      }
     },
   },
 };
 </script>
-  <style scoped>
-.main{
-    padding: 20px;
-    display: flex;
-    justify-content: center;
+
+<style scoped>
+.main {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
+
 .postContainer {
-    flex-grow: 1;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 0 20px;
-    width: 100%;
-    padding: 10px;
+  flex-grow: 1;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 0 20px;
+  width: 100%;
+  padding: 10px;
 }
+
 .post {
-    border-bottom: 1px solid #ddd;
-    padding: 0;
+  border-bottom: 1px solid #ddd;
+  padding: 0;
 }
-.post:last-child {
-    border-bottom: none;
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
-.post-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+
+.edit-section {
+  margin-top: 15px;
 }
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
-.date {
-    color: gray;
-    font-size: 0.9em;
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.post-content {
-    margin-top: 10px;
+
+button:hover {
+  background-color: #0056b3;
 }
-.post-image {
-    width: 100%;
-    border-radius: 5px;
+
+.delete-button {
+  background-color: #dc3545;
 }
-.post-content p {
-    margin-top: 10px;
+
+.delete-button:hover {
+  background-color: #c82333;
 }
-.like-button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+
+.save-button {
+  margin-top: 10px;
+  background-color: #28a745;
 }
-.like-button:hover {
-    background-color: #555;
+
+.save-button:hover {
+  background-color: #218838;
 }
+
 @media (max-width: 800px) {
-    .sidebar {
-        display: none;
-    }
+  .sidebar {
+    display: none;
+  }
 }
 </style>
