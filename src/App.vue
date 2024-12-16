@@ -26,7 +26,7 @@ export default {
       });
       const data = await response.json();
       if (data.authenticated) {
-        this.$store.commit("setAuthentication", true); // Update Vuex store
+        this.$store.commit("setAuthentication", true);
       } else {
         this.$store.commit("setAuthentication", false);
       }

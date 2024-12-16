@@ -27,6 +27,7 @@ export default {
     },
     async created() {
       	await this.$store.dispatch("fetchPosts");
+        console.log(this.$store.getters.posts);
     },
     computed: {
         getAllPosts(){

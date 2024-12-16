@@ -18,7 +18,6 @@
       };
     },
     methods: {
-      // Fetch the post for editing
       async fetchPost() {
         try {
           const response = await fetch(`http://localhost:3000/posts/${this.postId}`);
@@ -30,7 +29,6 @@
         }
       },
   
-      // Update the post
       async updatePost() {
         try {
           const response = await fetch(`http://localhost:3000/posts/${this.postId}`, {
@@ -47,7 +45,6 @@
         }
       },
   
-      // Navigate back
       cancel() {
         this.$router.push(`/singlepost/${this.postId}`);
       },

@@ -10,8 +10,6 @@
             {{ isEditing ? "Cancel" : "Edit Post" }}
           </button>
         </div>
-
-        <!-- Edit Post Section -->
         <div v-if="isEditing" class="edit-section">
           <textarea v-model="editedContent" rows="5"></textarea>
           <button class="save-button" @click="updatePost">Save Changes</button>
@@ -35,14 +33,14 @@ export default {
   data() {
     return {
       isEditing: false,
-      editedContent: "", // Local state for edited post content
+      editedContent: "",
     };
   },
   async created() {
     await this.$store.dispatch("fetchPosts");
     window.scrollTo(0, 0);
     if (this.getPost) {
-      this.editedContent = this.getPost.body; // Load post content for editing
+      this.editedContent = this.getPost.body;
     }
   },
   computed: {
@@ -55,7 +53,7 @@ export default {
     toggleEditMode() {
       this.isEditing = !this.isEditing;
       if (this.isEditing) {
-        this.editedContent = this.getPost.body; // Reset content when editing starts
+        this.editedContent = this.getPost.body;
       }
     },
     async updatePost() {
@@ -68,12 +66,9 @@ export default {
             body: JSON.stringify({ body: this.editedContent }),
           }
         );
-
         if (!response.ok) throw new Error("Failed to update post");
-
-        // Refresh posts in Vuex store
         await this.$store.dispatch("fetchPosts");
-        this.isEditing = false; // Exit edit mode
+        this.isEditing = false;
       } catch (e) {
         console.error("Error updating post:", e.message);
       }
@@ -86,10 +81,7 @@ export default {
             method: "DELETE",
           }
         );
-
         if (!response.ok) throw new Error("Failed to delete post");
-
-        // Refresh posts and navigate to homepage
         await this.$store.dispatch("fetchPosts");
         this.$router.push("/");
       } catch (e) {
