@@ -27,16 +27,38 @@ strict: true,
       state.isAuthenticated = status;
     },
 
-    incrementLikes(state, id) {
-      const postInArray = state.posts.find((p) => p.id === id);
-      if (postInArray) {
-        postInArray.likes++;
-      }
+    async incrementLikes(state, id) {
+		const postInArray = state.posts.find((p) => p.id === id);
+		if (postInArray) {
+			postInArray.likes++;
+			}
+		try {
+			const response = await fetch(`http://localhost:3000/posts/${id}/like`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" }
+			});
+			const data = await response.json();
+			if (!response.ok) {console.error("Error liking post:", data.error);}
+      	} catch (error) {
+        	console.error("Request failed:", error.message);
+		}
     },
 
-    zeroizeLikes(state) {
-      state.posts.forEach((s) => (s.likes = 0));
-      localStorage.setItem('posts', JSON.stringify(state.posts));
+    async zeroizeLikes(state) {
+		state.posts.forEach((s) => (s.likes = 0));
+		localStorage.setItem('posts', JSON.stringify(state.posts));
+		try {
+			const response = await fetch(`http://localhost:3000/posts/zero`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" }
+			});
+			const data = await response.json();
+			if (!response.ok) {
+				console.error("Error liking post:", data.error);
+			}
+		} catch (error) {
+			console.error("Request failed:", error.message);
+		}
     },
 
     setPosts(state, posts) {
