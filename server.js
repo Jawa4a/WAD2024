@@ -253,8 +253,52 @@ app.get('/posts/:id', async (req, res) => {
       console.error(err.message);
       res.status(500).json({ error: "Failed to fetch post" });
     }
-  });
-  
+});
+
+app.post('/posts/:id/like', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Create query to update likes in database. Returning updated row(post).
+        const query = `UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *;`;
+        // Post id
+        const values = [id];
+        // Query result.
+        const result = await pool.query(query, values);
+        // If we get any post from query.
+        if (result.rows.length > 0) {
+            console.log(`Post ID ${id} liked.`);
+            res.status(200).json({
+                post: result.rows[0]
+            });
+        } else {
+            res.status(404).json({ error: "Post not found" });
+        }
+    } catch (error) {
+        console.error("Error updating likes:", error.message);
+        res.status(500).json({ error: "Failed to add like" });
+    }
+});
+
+app.post('/posts/zero', async (req, res) => {
+    try {
+        const query = `UPDATE posts SET likes = 0 RETURNING *;`;
+        const result = await pool.query(query);
+        if (result.rows.length > 0) {
+            console.log("All posts' likes have been reset to 0.");
+            res.status(200).json({
+                message: "All posts' likes reset successfully.",
+            });
+        } else {
+            res.status(404).json({ error: "No posts found to update." });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to reset likes for all posts." });
+    }
+});
+
+
+
 
   
 
